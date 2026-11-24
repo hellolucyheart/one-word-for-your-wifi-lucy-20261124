@@ -23,11 +23,17 @@ MAX_CHARS = 20
 
 
 def validate(word: str) -> None:
-    """The gate only accepts one word: 1-20 UTF-8 characters, no spaces."""
+    """The gate only accepts one word: 1-20 UTF-8 characters, no spaces.
+
+    A Wi-Fi name word is letters only: digits or punctuation would make
+    it a code or a label, not a word a guest reads and laughs at.
+    """
     if not word or len(word) > MAX_CHARS:
         raise ValueError("entry must be 1 to 20 characters")
     if any(ch.isspace() for ch in word):
         raise ValueError("entry must be exactly one word")
+    if not word.isalpha() or not word.isascii():
+        raise ValueError("entry must be one word of letters")
 
 
 def main() -> int:
